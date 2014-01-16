@@ -78,8 +78,16 @@ fi
 
 # install JDK
 javaVersion=$(detect_java_version ${BUILD_DIR})
-echo -n "-----> Installing OpenJDK ${javaVersion}..."
-install_java ${BUILD_DIR} ${javaVersion}
+echo -n "-----> Installing OracleJDK ${javaVersion}..."
+jdkDir="${BUILD_DIR}"/.jdk
+cd jdkDir
+wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F" http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-linux-x64.bin
+chmod u+x jdk-6u45-linux-x64.bin
+./jdk-6u45-linux-x64.bin
+export JAVA_HOME="${jdkDir}/"
+export PATH="${jdkDir}/bin:${PATH}"
+
+#install_java ${BUILD_DIR} ${javaVersion}
 jdk_overlay ${BUILD_DIR}
 echo "done"
 
